@@ -334,3 +334,54 @@ body {
 		align-items: center;
 	}
 }
+
+/* ============================================================
+   Static-mirror navigation fix (added by archive build)
+   Replaces the fragile JS/Dojo height animation with a robust
+   pure-CSS hover dropdown. !important neutralizes the inline
+   heights set by lccc-design.js and the cramped 40px flex rule
+   above, which caused submenu items to bunch together on hover.
+   ============================================================ */
+.ld-header-menu > li { position: relative; }
+
+.ld-header-submenu {
+	height: auto !important;          /* ignore JS inline height animation */
+	max-height: 0;                    /* collapsed by default */
+	overflow: hidden !important;
+	display: block !important;        /* vertical list, not flex row */
+	justify-content: flex-start !important;
+	align-items: stretch !important;
+	transition: max-height 0.18s ease-out;
+}
+
+.ld-header-menu > li:hover > .ld-header-submenu,
+.ld-header-menu > li:focus-within > .ld-header-submenu {
+	max-height: 80vh !important;      /* expand to fit all items */
+	overflow: visible !important;
+}
+
+.ld-header-submenu li {
+	display: block !important;
+	float: none !important;
+}
+
+.ld-header-submenu li a {
+	display: block !important;
+	white-space: nowrap;              /* one clean line per item */
+	padding: 0.55em 1.5em 0.55em 1em !important;
+}
+
+.ld-header-submenu li a:hover {
+	background-color: #367AA2;        /* clear hover target for precise clicking */
+	color: #FFFFFF;
+}
+
+/* Keep the same robust behavior on narrow screens */
+@media screen and (max-width: 800px){
+	.ld-header-submenu{
+		height: auto !important;
+		display: block !important;
+		justify-content: flex-start !important;
+		align-items: stretch !important;
+	}
+}
